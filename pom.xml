@@ -108,10 +108,11 @@
 </plugin>
 
 <plugin>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>findbugs-maven-plugin</artifactId>
-    <version>3.0.5</version>
+    <groupId>com.github.spotbugs</groupId>
+    <artifactId>spotbugs-maven-plugin</artifactId>
+    <version>4.7.3.5</version>
     <configuration>
+        <skip>false</skip>
         <effort>Max</effort>
         <threshold>Low</threshold>
         <xmlOutput>true</xmlOutput>
@@ -178,6 +179,7 @@
             <artifactId>maven-clover2-plugin</artifactId>
             <version>3.0.4</version>
             <configuration>
+                <skip>true</skip>
                 <generateXml>true</generateXml>
             </configuration>
             <executions>
@@ -192,14 +194,21 @@
         </plugin>
 
         <!-- Dockerfile Maven Plugin -->
+        <!-- Docker Maven Plugin -->
         <plugin>
-            <groupId>com.spotify</groupId>
-            <artifactId>dockerfile-maven-plugin</artifactId>
-            <version>${dockerfile-maven-plugin.version}</version>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.40.2</version>
             <configuration>
-                <repository>varunmanik/manik-calculator</repository>
-                <tag>${project.version}</tag>
-                <contextDirectory>${project.basedir}</contextDirectory>
+                <images>
+                    <image>
+                        <name>varunmanik/manik-calculator:${project.version}</name>
+                        <build>
+                            <contextDir>${project.basedir}</contextDir>
+                            <dockerFile>Dockerfile</dockerFile>
+                        </build>
+                    </image>
+                </images>
             </configuration>
         </plugin>
     </plugins>
