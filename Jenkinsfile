@@ -1,15 +1,12 @@
 pipeline {
     agent any
-    environment {
-        SERVER_IP = sh(script: 'curl -s http://169.254.169.254/latest/meta-data/public-ipv4', returnStdout: true).trim()
-    }
     tools {
         maven 'my_mvn'
     }
     stages {
         stage("Checkout") {   
             steps {               	 
-                git branch: 'main', url: 'https://github.com/manikcloud/manik-calculator.git'        	 
+                git branch: 'main', url: 'https://github.com/h4r1yzz/manik-calculator.git'        	 
             
                 // git branch: '8.1-addressbook', url: 'https://github.com/manikcloud/Jenkins-cicd.git'        	 
             }    
@@ -71,12 +68,6 @@ pipeline {
                 recordIssues tools: [checkStyle(pattern: '**/checkstyle-result.xml')]
             }
         }
-        stage('FindBugs Analysis') {
-            steps {
-                sh 'mvn findbugs:findbugs'
-                recordIssues tools: [findBugs(pattern: '**/findbugsXml.xml')]
-            }
-        }
 
 
 
@@ -98,7 +89,7 @@ pipeline {
             junit 'target/surefire-reports/*.xml'
         }
         success {
-            echo "App URL: http://${SERVER_IP}:8090/manik-calculator/"
+            echo "success"
             // emailext (
             //     to: 'varunmanik1@gmail.com',
             //     subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
@@ -106,7 +97,7 @@ pipeline {
             // )
         }
         failure {
-            echo "Failed to deploy application to http://${SERVER_IP}:8090/manik-calculator/"
+            echo "Failed"
             // emailext (
             //     to: 'varunmanik1@gmail.com',
             //     subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
