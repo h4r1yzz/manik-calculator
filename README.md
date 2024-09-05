@@ -18,7 +18,7 @@ hello noob Manik Calculator is a Java-based web application that allows users to
 
 - Java Development Kit (JDK) installed on your system
 - Maven installed on your system
-- Docker installed on your system
+- Docker installed on your systemfdffd
 
 ## Installation
 
